@@ -29,7 +29,63 @@ class Node implements NodeInteface {
      *
      */
     public Node(Integer id, String name, LocalDate dob, String suburb) {
-
+        this.id = id;
+        this.name = name;
+        this.dateOB = dob;
+        this.suburb = suburb;
     }
 
+    /**
+     * get account id
+     *
+     * @return account id
+     */
+    @Override
+    public Integer getId() {
+        return this.id;
+    }
+
+    /**
+     * get account name
+     *
+     * @return account name
+     */
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * get suburb
+     *
+     * @return suburb
+     */
+    @Override
+    public String getSuburb() {
+        return this.suburb;
+    }
+
+    /**
+     * get date of birth
+     *
+     * @return date of birth
+     */
+    @Override
+    public LocalDate getDateOB() {
+        return this.dateOB;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dateOB=" + dateOB +
+                ", suburb='" + suburb + '\'' +
+                '}';
+    }
 }
