@@ -1,5 +1,5 @@
 
-/**alimah 
+/**
  * represents accounts and their relationship as a graph; 
  *
  * @author Saber Elsayed

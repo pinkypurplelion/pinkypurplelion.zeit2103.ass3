@@ -88,4 +88,17 @@ class Node implements NodeInteface {
                 ", suburb='" + suburb + '\'' +
                 '}';
     }
+
+    // /**
+    //  * overrides a hash code value for the object.  
+    //  *
+    //  * @return hash code value for a Node object
+    //  */
+    // @Override
+    // public int hashCode()
+    // {
+    //     int hash = ;
+    //     hash = * hash + this.id;
+    //     return hash;
+    // }
 }

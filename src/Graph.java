@@ -18,7 +18,17 @@ public class Graph implements GraphInterface {
      */
     protected HashMap<Integer, Node> nodeList = new HashMap<>();
 
-   
+    // public Node addNode(Integer id, String name, LocalDate dob, String suburb)
+    // {
+    //     int count = 0; 
+    //     Node newPers = Node( id,  name,  dob,  suburb);
+    //     if (!nodeList.containsValue(newPers))
+    //     {
+    //         nodeList.put(count+1, newPers);
+    //     } 
+    //     return newPers;
+    //     // throw exception - if the person is added to the map or regardless?
+    // }
 
     /**
      * Test main that creates a graph,
