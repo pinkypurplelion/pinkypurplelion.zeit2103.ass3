@@ -142,9 +142,6 @@ class Node implements NodeInteface {
         long seedSqrd = (long) seed * seed;
 
         String seedS = Long.toString(seedSqrd);
-        System.out.println("seed: " + seedS);
-        int hash = Integer.parseInt(seedS.substring(seedS.length()/2-3, seedS.length()/2+3));
-
-        return hash;
+        return Integer.parseInt(seedS.substring(seedS.length()/2-3, seedS.length()/2+3));
     }
 }
