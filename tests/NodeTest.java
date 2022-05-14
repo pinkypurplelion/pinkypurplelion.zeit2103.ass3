@@ -10,7 +10,7 @@ class NodeTest {
     String[][] data = new String[][]{
             {"1", "Mr Potato Head", "Wanniassa", "2020-03-12"},
             {"34", "Kingo Dot Com", "Kingston", "1953-05-19"},
-            {"98", "Shrektastic", "Mars", "2328-10-83"},
+            {"98", "Shrektastic", "Mars", "2328-10-29"},
             {"126", "Yeeehaw", "AlphabetSoup", "2002-04-11"}
     };
 
@@ -55,10 +55,12 @@ class NodeTest {
         // TODO: do we implement?
     }
 
+    // TODO: implement
     @Test
     void testEquals() {
     }
 
+    // TODO: implement tests
     @Test
     void testHashCode() {
         for (String[] object : data) {

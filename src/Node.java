@@ -104,15 +104,37 @@ class Node implements NodeInteface {
 
     /**
      * @return The hashcode of the object
+     *
+     * TODO: handle <3 name length
+     * TODO: test different hash lengths
+     * TODO: test number of squares required
      */
     @Override
     public int hashCode() {
-        StringBuilder nameSeed = new StringBuilder();
+        StringBuilder nameChar = new StringBuilder();
         for (char c :
-                this.name.substring(0,3).toCharArray()) {
-            nameSeed.append(c);
+                this.name.toCharArray()) {
+            nameChar.append((int) c);
         }
-        System.out.println(nameSeed);
-        return Objects.hash(id, name, dateOB, suburb);
+        int nameSeed = Integer.parseInt(nameChar.substring(nameChar.length()/2-1, nameChar.length()/2+2));
+
+        StringBuilder suburbChar = new StringBuilder();
+        for (char c :
+                this.suburb.toCharArray()) {
+            suburbChar.append((int) c);
+        }
+        int suburbSeed = Integer.parseInt(suburbChar.substring(suburbChar.length()/2-1, suburbChar.length()/2+2));
+
+        int dateSeed = this.dateOB.getDayOfYear();
+
+        int seed = Integer.parseInt(nameSeed + "" + dateSeed + "" + suburbSeed);
+
+        long seedSqrd = (long) seed * seed;
+
+        String seedS = Long.toString(seedSqrd);
+
+        int hash = Integer.parseInt(seedS.substring(seedS.length()/2-3, seedS.length()/2+3));
+
+        return hash;
     }
 }
