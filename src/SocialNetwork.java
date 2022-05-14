@@ -1,4 +1,11 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * represents accounts and their relationship as a graph; 
@@ -8,6 +15,9 @@ import java.util.List;
  */
 public class SocialNetwork implements SocialNetworkInterface {
 
+    private static final Logger logger =
+            Logger.getLogger(SocialNetwork.class.getName());
+
     protected Graph sn;
 
     /**
@@ -15,17 +25,14 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     public SocialNetwork() {
         sn = new Graph();
-
     }
 
     /**
-     *
-     *
      * @param args
      */
     public static void main(String[] args) {
         SocialNetwork driver = new SocialNetwork();
-        System.out.println(driver.sn);
+        driver.processFile();
     }
 
     /**
@@ -34,7 +41,30 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public void processFile() {
+        try (FileInputStream inputStream = new FileInputStream("resources/data.txt");
+             Scanner sc = new Scanner(inputStream, StandardCharsets.UTF_8)) {
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
 
+                String[] split = line.split("\t");
+                String[] split2 = split[2].split(",");
+
+//                System.out.println(split[0]+":"+split[1]+":"+split2[0]+":"+split2[1].strip());
+                Node node = sn.addNode(Integer.parseInt(split[0]), split[1], LocalDate.parse(split2[0]), split2[1].strip());
+//
+//                for (int i = 2; i < split2.length; i++) {
+//                    sn.addEdge(node);
+//                }
+
+//                System.out.println(split.length);
+            }
+            // note that Scanner suppresses exceptions
+            if (sc.ioException() != null) {
+                logger.severe("IOException: Error reading file. Error: " + sc.ioException());
+            }
+        } catch (IOException e) {
+            logger.severe("Error reading files. Error: " + e.getMessage());
+        }
     }
 
     /**
