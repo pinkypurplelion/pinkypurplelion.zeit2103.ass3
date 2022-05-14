@@ -1,6 +1,7 @@
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Represents a vertex in the graph with its adjacency list of edges.
@@ -89,16 +90,29 @@ class Node implements NodeInteface {
                 '}';
     }
 
-    // /**
-    //  * overrides a hash code value for the object.  
-    //  *
-    //  * @return hash code value for a Node object
-    //  */
-    // @Override
-    // public int hashCode()
-    // {
-    //     int hash = ;
-    //     hash = * hash + this.id;
-    //     return hash;
-    // }
+    /**
+     * @param o Object to compare against
+     * @return true if equal, false if not
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return id.equals(node.id) && name.equals(node.name) && dateOB.equals(node.dateOB) && suburb.equals(node.suburb);
+    }
+
+    /**
+     * @return The hashcode of the object
+     */
+    @Override
+    public int hashCode() {
+        StringBuilder nameSeed = new StringBuilder();
+        for (char c :
+                this.name.substring(0,3).toCharArray()) {
+            nameSeed.append(c);
+        }
+        System.out.println(nameSeed);
+        return Objects.hash(id, name, dateOB, suburb);
+    }
 }
