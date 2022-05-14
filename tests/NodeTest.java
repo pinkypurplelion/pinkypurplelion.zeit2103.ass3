@@ -107,7 +107,7 @@ class NodeTest {
         } catch (IOException e) {
             logger.severe("Error reading files. Error: " + e.getMessage());
         }
-        // assert hashCode produces at least 1 in 10,000 collision
+        // assert hashCode produces at least 1 in 1,000 collision
         // rate in random sampled data
 
         int num = nodes.size();

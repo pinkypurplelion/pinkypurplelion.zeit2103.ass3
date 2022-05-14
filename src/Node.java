@@ -112,7 +112,7 @@ class Node implements NodeInteface {
      */
     @Override
     public int hashCode() {
-        int hashIterations = 100;
+        int hashIterations = 2;
         // multiples of 2 because references index
         int subSeedLen = 6;
         int seedLength = 10;
@@ -145,16 +145,19 @@ class Node implements NodeInteface {
         long seed = Long.parseLong(nameSeed + "" + dateSeed + "" + suburbSeed);
 
         long seedSqrd = seed * seed;
+        if (seedSqrd < 0) seedSqrd *= -1;
 
-        for (int i = 0; i < hashIterations; i++) {
-            String seedStr = Long.toString(seedSqrd);
-            if (seedStr.length() < seedLength)
-                seed = (int) seedSqrd;
-            else
-                seed = Long.parseLong(seedStr.substring(seedStr.length()/2-(seedLength/2), seedStr.length()/2+(seedLength/2)));
-            seedSqrd = seed * seed;
-        }
-
+        // low iterations: no impact on collision %
+        // high iterations: increase collision %
+//        for (int i = 0; i < hashIterations; i++) {
+//            String seedStr = Long.toString(seedSqrd);
+//            if (seedStr.length() < seedLength)
+//                seed = (int) seedSqrd;
+//            else
+//                seed = Long.parseLong(seedStr.substring(seedStr.length()/2-(seedLength/2), seedStr.length()/2+(seedLength/2)));
+//            seedSqrd = seed * seed;
+//            if (seedSqrd < 0) seedSqrd *= -1;
+//        }
         String seedS = Long.toString(seedSqrd);
 
         if (seedS.length() < hashLength)
