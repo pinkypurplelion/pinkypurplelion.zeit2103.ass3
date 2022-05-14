@@ -112,17 +112,22 @@ class Node implements NodeInteface {
      */
     @Override
     public int hashCode() {
+        int hashIterations = 100;
+        // multiples of 2 because references index
+        int subSeedLen = 6;
+        int seedLength = 10;
+        int hashLength = 8;
+
         StringBuilder nameChar = new StringBuilder();
         for (char c :
                 this.name.toCharArray()) {
             nameChar.append((int) c);
         }
         int nameSeed;
-        if (nameChar.length() > 2)
-            nameSeed = Integer.parseInt(nameChar.substring(nameChar.length()/2-1, nameChar.length()/2+2));
+        if (nameChar.length() > subSeedLen)
+            nameSeed = Integer.parseInt(nameChar.substring(nameChar.length()/2-(subSeedLen/2), nameChar.length()/2+(subSeedLen/2)));
         else
             nameSeed = Integer.parseInt(nameChar.toString());
-
 
         StringBuilder suburbChar = new StringBuilder();
         for (char c :
@@ -130,18 +135,30 @@ class Node implements NodeInteface {
             suburbChar.append((int) c);
         }
         int suburbSeed;
-        if (suburbChar.length() > 2)
-            suburbSeed = Integer.parseInt(suburbChar.substring(suburbChar.length()/2-1, suburbChar.length()/2+2));
+        if (suburbChar.length() > subSeedLen)
+            suburbSeed = Integer.parseInt(suburbChar.substring(suburbChar.length()/2-(subSeedLen/2), suburbChar.length()/2+(subSeedLen/2)));
         else
             suburbSeed = Integer.parseInt(suburbChar.toString());
 
         int dateSeed = this.dateOB.getDayOfYear();
 
-        int seed = Integer.parseInt(nameSeed + "" + dateSeed + "" + suburbSeed);
+        long seed = Long.parseLong(nameSeed + "" + dateSeed + "" + suburbSeed);
 
-        long seedSqrd = (long) seed * seed;
+        long seedSqrd = seed * seed;
+
+        for (int i = 0; i < hashIterations; i++) {
+            String seedStr = Long.toString(seedSqrd);
+            if (seedStr.length() < seedLength)
+                seed = (int) seedSqrd;
+            else
+                seed = Long.parseLong(seedStr.substring(seedStr.length()/2-(seedLength/2), seedStr.length()/2+(seedLength/2)));
+            seedSqrd = seed * seed;
+        }
 
         String seedS = Long.toString(seedSqrd);
-        return Integer.parseInt(seedS.substring(seedS.length()/2-3, seedS.length()/2+3));
+
+        if (seedS.length() < hashLength)
+            return (int) seedSqrd;
+        return Integer.parseInt(seedS.substring(seedS.length()/2-(hashLength/2), seedS.length()/2+(hashLength/2)));
     }
 }

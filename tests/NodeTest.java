@@ -75,7 +75,11 @@ class NodeTest {
     void testEquals() {
     }
 
-    //TODO: implement test
+    /*
+    TODO: implement test
+    TODO: test for seed < middle section being pulled out
+    TODO: test for
+     */
     @Test
     void testHashCode() {
 
@@ -108,11 +112,11 @@ class NodeTest {
 
         int num = nodes.size();
 
-        logger.info("Assert collision rate < 0.0001 (1 in 10,000)");
+        logger.info("Assert collision rate < 0.001 (1 in 1000)");
         logger.info("Collision rate: " + (float) hashes.size()/num);
         logger.info("1 - Collision rate: " + (1 - (float) hashes.size()/num));
         logger.info(hashes.size() + " unique hashes out of " + num + " objects");
-        assertTrue(1 - ((float) hashes.size()/num) < 0.0001);
+        assertTrue(1 - ((float) hashes.size()/num) < 0.001);
 
     }
 }
