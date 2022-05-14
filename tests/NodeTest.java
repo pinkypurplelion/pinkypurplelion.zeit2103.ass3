@@ -52,6 +52,18 @@ class NodeTest {
 
     @Test
     void testToString() {
-        // do we implement?
+        // TODO: do we implement?
+    }
+
+    @Test
+    void testEquals() {
+    }
+
+    @Test
+    void testHashCode() {
+        for (String[] object : data) {
+            Node node = new Node(Integer.valueOf(object[0]), object[1], LocalDate.parse(object[3]), object[2]);
+            node.hashCode();
+        }
     }
 }
