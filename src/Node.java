@@ -93,6 +93,7 @@ class Node implements NodeInteface {
     /**
      * @param o Object to compare against
      * @return true if equal, false if not
+     * TODO: verify equals words/implement
      */
     @Override
     public boolean equals(Object o) {
@@ -105,9 +106,9 @@ class Node implements NodeInteface {
     /**
      * @return The hashcode of the object
      *
-     * TODO: handle <3 name length
      * TODO: test different hash lengths
      * TODO: test number of squares required
+     * TODO: handle null input values?
      */
     @Override
     public int hashCode() {
@@ -116,14 +117,23 @@ class Node implements NodeInteface {
                 this.name.toCharArray()) {
             nameChar.append((int) c);
         }
-        int nameSeed = Integer.parseInt(nameChar.substring(nameChar.length()/2-1, nameChar.length()/2+2));
+        int nameSeed;
+        if (nameChar.length() > 2)
+            nameSeed = Integer.parseInt(nameChar.substring(nameChar.length()/2-1, nameChar.length()/2+2));
+        else
+            nameSeed = Integer.parseInt(nameChar.toString());
+
 
         StringBuilder suburbChar = new StringBuilder();
         for (char c :
                 this.suburb.toCharArray()) {
             suburbChar.append((int) c);
         }
-        int suburbSeed = Integer.parseInt(suburbChar.substring(suburbChar.length()/2-1, suburbChar.length()/2+2));
+        int suburbSeed;
+        if (suburbChar.length() > 2)
+            suburbSeed = Integer.parseInt(suburbChar.substring(suburbChar.length()/2-1, suburbChar.length()/2+2));
+        else
+            suburbSeed = Integer.parseInt(suburbChar.toString());
 
         int dateSeed = this.dateOB.getDayOfYear();
 
@@ -132,7 +142,7 @@ class Node implements NodeInteface {
         long seedSqrd = (long) seed * seed;
 
         String seedS = Long.toString(seedSqrd);
-
+        System.out.println("seed: " + seedS);
         int hash = Integer.parseInt(seedS.substring(seedS.length()/2-3, seedS.length()/2+3));
 
         return hash;
