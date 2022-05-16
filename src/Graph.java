@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -19,18 +20,20 @@ public class Graph implements GraphInterface {
      */
     protected HashMap<Integer, Node> nodeList = new HashMap<>();
      
+    int count = 0; 
 
-    // public Node addNode(Integer id, String name, LocalDate dob, String suburb)
-    // {
-    //     int count = 0; 
-    //     Node newPers = Node( id,  name,  dob,  suburb);
-    //     if (!nodeList.containsValue(newPers))
-    //     {
-    //         nodeList.put(count+1, newPers);
-    //     } 
-    //     return newPers;
-    //     // throw exception - if the person is added to the map or regardless?
-    // }
+    public Node addNode(Integer id, String name, LocalDate dob, String suburb)
+    {
+                Node newPers = new Node(id,  name,  dob,  suburb);
+        if (!nodeList.containsKey(id))
+        {
+            count = count + 1;
+            nodeList.put(count, newPers);
+        } 
+        return newPers;
+        // LAB 
+        // throw exception - if the person cannot be added to the map or regardless? Where is return
+    }
 
     // hasmap of nodes and list of nodes its atached to 
     // if it does exist yet, make it
@@ -49,6 +52,20 @@ public class Graph implements GraphInterface {
     //         nodeList.get()
     //     }
     // }
+
+    public void removeNode(Node node)
+    {
+        if (nodeList.containsValue(node))
+        {
+            // get key associated with value by use of iterator 
+            // if (valueToBeRemoved.equals(entry.getValue(){}
+            nodeList.remove(nodeList(node.getKey()));
+        }
+        else 
+        {
+            throw new IllegalStateException("Issue removing Node" + node.getName());
+        }
+    }
 
 
     /**
