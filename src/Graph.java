@@ -37,8 +37,11 @@ public class Graph implements GraphInterface {
 
     public void addEdge(Node from, Node to)
     {
+        //Only checks the connection of one Node and they are made simultaneously. 
+        // If there hasn't been an edge created between the two Nodes, make one.
         if (!from.adj.containsKey(to.getId()))
         {
+            // Edge created for each Node as the graph is undirected
             from.adj.put(to.getId(), to);
             to.adj.put(from.getId(), from);
         }
