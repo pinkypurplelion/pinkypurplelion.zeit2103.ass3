@@ -24,7 +24,7 @@ public class Graph implements GraphInterface {
 
     public Node addNode(Integer id, String name, LocalDate dob, String suburb)
     {
-                Node newPers = new Node(id,  name,  dob,  suburb);
+        Node newPers = new Node(id,  name,  dob,  suburb);
         if (!nodeList.containsKey(id))
         {
             count = count + 1;
@@ -35,23 +35,38 @@ public class Graph implements GraphInterface {
         // throw exception - if the person cannot be added to the map or regardless? Where is return
     }
 
-    // hasmap of nodes and list of nodes its atached to 
-    // if it does exist yet, make it
-    // if it does exist, get key of node and add the key of the other node to the list within the map
-    // public void addEdge(Node from, Node to)
-    // {
-    //     // if the hashmap doesn't contain the from node,
-    //     if (!nodeList.containsValue(from))
-    //     {
-    //         // add it to the map
-    //         addNode(from.getId(), from.getName(), from.getDateOB(), from.getSuburb());
-    //     } else 
-    //     if (!nodeList.containsValue(to))
-    //     {
-    //         addNode(to.getId(), to.getName(), to.getDateOB(), to.getSuburb());
-    //         nodeList.get()
-    //     }
-    // }
+    public void addEdge(Node from, Node to)
+    {
+        //Only checks the connection of one Node and they are made simultaneously. 
+        // If there hasn't been an edge created between the two Nodes, make one.
+        if (!from.connectionList.contains(to))
+    	{
+            // Edge created for each Node as the graph is undirected
+    		from.connectionList.add(to);
+    		to.connectionList.add(from);
+    	}
+    	else 
+        {
+    	    throw new RuntimeException("Edge already exists between " + from.getName() + " and " + to.getName());
+        }
+    	 
+    	// Test
+        System.out.println("CHECK");
+        System.out.println(from.getName() + " is friends with " + to.getName());
+        System.out.println(to.getName() + " is friends with " + from.getName());
+        System.out.println(from.getName() + "'s friends:");
+        for (Node nde : from.connectionList)
+        {
+            System.out.println(nde);
+        }
+        System.out.println(to.getName() + "'s friends:");
+        for (Node node : to.connectionList)
+        {
+            System.out.println(node);
+        }
+        //
+    }
+     
 
     public void removeNode(Node node)
     {

@@ -1,6 +1,8 @@
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,6 +25,9 @@ class Node implements NodeInteface {
 
     //contains a list of all firends of a person object
     protected HashMap<Integer, Edge> adj;
+
+    // contains list of friends of a node (edge)
+    protected List<Node> connectionList = new ArrayList<>();
 
     /**
      * Construct a new vertex in the graph with the supplied id, name, DOB and
