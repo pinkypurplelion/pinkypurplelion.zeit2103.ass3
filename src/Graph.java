@@ -37,33 +37,23 @@ public class Graph implements GraphInterface {
 
     public void addEdge(Node from, Node to)
     {
-        //Only checks the connection of one Node and they are made simultaneously. 
-        // If there hasn't been an edge created between the two Nodes, make one.
-        if (!from.connectionList.contains(to))
-    	{
-            // Edge created for each Node as the graph is undirected
-    		from.connectionList.add(to);
-    		to.connectionList.add(from);
-    	}
-    	else 
+        if (!from.adj.containsKey(to.getId()))
         {
-    	    throw new RuntimeException("Edge already exists between " + from.getName() + " and " + to.getName());
+            from.adj.put(to.getId(), to);
+            to.adj.put(from.getId(), from);
         }
-    	 
-    	// Test
-        System.out.println("CHECK");
+        else 
+        {
+            throw new RuntimeException("Edge already exists between " + from.getName() + " and " + to.getName());
+        }
+        
+       // Test
         System.out.println(from.getName() + " is friends with " + to.getName());
         System.out.println(to.getName() + " is friends with " + from.getName());
+        System.out.println("CHECK");
         System.out.println(from.getName() + "'s friends:");
-        for (Node nde : from.connectionList)
-        {
-            System.out.println(nde);
-        }
-        System.out.println(to.getName() + "'s friends:");
-        for (Node node : to.connectionList)
-        {
-            System.out.println(node);
-        }
+        System.out.println(from.adj);
+        System.out.println(to.adj.get(from.getId()));
         //
     }
      
