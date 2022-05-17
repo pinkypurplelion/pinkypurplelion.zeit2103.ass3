@@ -92,10 +92,25 @@ public class SocialNetwork implements SocialNetworkInterface {
      *
      * @param currentPerson @Node
      * @return a list of no more than 5 friends
+     *
+     * TODO: test
      */
     @Override
     public List<Node> suggestFriends(Node currentPerson) {
-        return null;
+        HashMap<Integer, Node> currentFriends = currentPerson.adj;
+        HashSet<Node> friendsOfFriends = new HashSet<>();
+        List<Node> suggestedFriends = new ArrayList<>();
+
+        //adds all friends of friends to the set
+        for (Node friend : currentFriends.values()) {
+            friendsOfFriends.addAll(friend.adj.values());
+        }
+
+        for (Node person : friendsOfFriends) {
+            if (Objects.equals(person.getSuburb(), currentPerson.getSuburb()))
+                suggestedFriends.add(person);
+        }
+        return suggestedFriends;
     }
 
     /**
