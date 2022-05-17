@@ -24,6 +24,7 @@ public class SocialNetwork implements SocialNetworkInterface {
     public SocialNetwork() {
         sn = new Graph();
         processFile();
+        System.out.println(suggestFriends(sn.nodeList.get(1)));
     }
 
     /**
@@ -31,7 +32,6 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     public static void main(String[] args) {
         SocialNetwork driver = new SocialNetwork();
-        driver.processFile();
     }
 
     /**
@@ -105,6 +105,8 @@ public class SocialNetwork implements SocialNetworkInterface {
         for (Node friend : currentFriends.values()) {
             friendsOfFriends.addAll(friend.adj.values());
         }
+        System.out.println("current friends: " + currentFriends.values());
+        System.out.println("friends of friends: " + friendsOfFriends);
 
         for (Node person : friendsOfFriends) {
             if (Objects.equals(person.getSuburb(), currentPerson.getSuburb()))
