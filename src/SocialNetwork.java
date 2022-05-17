@@ -138,6 +138,14 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public List<String> getMutualFriends(Node x, Node y) {
-        return null;
+        HashMap<Integer, Node> xFriends = x.adj;
+        HashMap<Integer, Node> yFriends = y.adj;
+        List<String> mutualFriends = new ArrayList<>();
+        for (Node friend :
+                xFriends.values()) {
+            if (yFriends.containsValue(friend))
+                mutualFriends.add(friend.getName());
+        }
+        return mutualFriends;
     }
 }
