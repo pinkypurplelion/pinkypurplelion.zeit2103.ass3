@@ -1,6 +1,8 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 
 
@@ -62,18 +64,61 @@ public class Graph implements GraphInterface {
      
 
     public void removeNode(Node node)
-    {
-        if (nodeList.containsValue(node))
-        {
-            // get key associated with value by use of iterator 
-            // if (valueToBeRemoved.equals(entry.getValue(){}
-            nodeList.remove(nodeList(node.getKey()));
-        }
-        else 
-        {
-            throw new IllegalStateException("Issue removing Node" + node.getName());
-        }
-    }
+     {
+    	// Test
+         System.out.println("Remove Node test before removing ");
+         System.out.println("NODE TO BE REMOVED: " + node);
+         System.out.println("NODE FRIENDS: " + node.adj.values());
+         System.out.println("NODE FRIEND FRIENDS: " + node.adj.get(6).adj.values());         
+         // 
+         
+    	 if(nodeList.containsValue(node))
+    	 {
+    		 // Checks if Node has any edges associated to it
+    		 if (!node.adj.isEmpty())
+    		 {
+    			 // If it does, find those edges
+		        List<Integer> listOfFriends = new ArrayList<Integer>();
+		           
+		        // Reverse the HashMap so Friends of Nodes can be recorded
+		        // Go through each entry within the nodeList 
+		        for (HashMap.Entry<Integer, Node> entry : nodeList.entrySet()) 
+		        {
+		            // If 
+		            if (entry.getValue().adj.containsValue(node))
+		            {
+		                // Store the key from entry to the list
+		                listOfFriends.add(entry.getKey());
+		            }
+		        }
+		        
+		        for (Integer id : listOfFriends)
+		        {
+		        	nodeList.get(id).adj.remove(node.getId());
+		        	// As the keys in nodeList do no correspond to the keys in the adj list of each Node, 
+		        	// the Node is retrieved from nodeList, with the id (key in adj) of the node being removed's friend  
+		        	// is used to remove the connection within the node being removed's adj map. 
+		        	node.adj.remove(nodeList.get(id).getId()); 
+		        	
+		        }
+    		}
+	        nodeList.remove(node.getId());
+
+	        // test line
+        	System.out.println("node removed? "+ (nodeList.get(node.getId()) == null));
+    	 }
+    	 else
+    	 {
+    		 throw new IllegalStateException(node.getName() + " is not in graph.");
+    	 }
+    		
+    	 // Test
+         System.out.println("Remove Node test");
+         System.out.println("NODE TO BE REMOVED: " + node);
+         System.out.println("NODE FRIENDS: " + node.adj.values());
+//         System.out.println("NODE FRIEND FRIENDS: " + node.adj.get(6).adj.values()); // should return exception as there are now no friends to see the connections associated to them
+         // 
+     }
 
 
     /**
