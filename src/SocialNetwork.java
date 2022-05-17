@@ -24,6 +24,7 @@ public class SocialNetwork implements SocialNetworkInterface {
     public SocialNetwork() {
         sn = new Graph();
         processFile();
+        System.out.println(suggestFriends(sn.nodeList.get(1)));
     }
 
     /**
@@ -31,7 +32,6 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     public static void main(String[] args) {
         SocialNetwork driver = new SocialNetwork();
-        driver.processFile();
     }
 
     /**
@@ -92,10 +92,27 @@ public class SocialNetwork implements SocialNetworkInterface {
      *
      * @param currentPerson @Node
      * @return a list of no more than 5 friends
+     *
+     * TODO: test
      */
     @Override
     public List<Node> suggestFriends(Node currentPerson) {
-        return null;
+        HashMap<Integer, Node> currentFriends = currentPerson.adj;
+        HashSet<Node> friendsOfFriends = new HashSet<>();
+        List<Node> suggestedFriends = new ArrayList<>();
+
+        //adds all friends of friends to the set
+        for (Node friend : currentFriends.values()) {
+            friendsOfFriends.addAll(friend.adj.values());
+        }
+        System.out.println("current friends: " + currentFriends.values());
+        System.out.println("friends of friends: " + friendsOfFriends);
+
+        for (Node person : friendsOfFriends) {
+            if (Objects.equals(person.getSuburb(), currentPerson.getSuburb()))
+                suggestedFriends.add(person);
+        }
+        return suggestedFriends;
     }
 
     /**
@@ -121,6 +138,14 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public List<String> getMutualFriends(Node x, Node y) {
-        return null;
+        HashMap<Integer, Node> xFriends = x.adj;
+        HashMap<Integer, Node> yFriends = y.adj;
+        List<String> mutualFriends = new ArrayList<>();
+        for (Node friend :
+                xFriends.values()) {
+            if (yFriends.containsValue(friend))
+                mutualFriends.add(friend.getName());
+        }
+        return mutualFriends;
     }
 }
