@@ -2,9 +2,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -25,10 +23,11 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     public SocialNetwork() {
         sn = new Graph();
+//        processFile();
     }
 
     /**
-     * @param args
+     * @param args N/A
      */
     public static void main(String[] args) {
         SocialNetwork driver = new SocialNetwork();
@@ -41,22 +40,30 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public void processFile() {
+        HashMap<Node, HashSet<Integer>> nodes = new HashMap<>();
+
         try (FileInputStream inputStream = new FileInputStream("resources/data.txt");
              Scanner sc = new Scanner(inputStream, StandardCharsets.UTF_8)) {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
 
+                //splits lines into data segments as an array
+                //needs two splits because of file formatting
                 String[] split = line.split("\t");
                 String[] split2 = split[2].split(",");
 
-//                System.out.println(split[0]+":"+split[1]+":"+split2[0]+":"+split2[1].strip());
+                // adds node to graph
                 Node node = sn.addNode(Integer.parseInt(split[0]), split[1], LocalDate.parse(split2[0]), split2[1].strip());
-//
-//                for (int i = 2; i < split2.length; i++) {
-//                    sn.addEdge(node);
-//                }
 
-//                System.out.println(split.length);
+                //creates set of nodes friends from file
+                HashSet<Integer> friends = new HashSet<>();
+
+                for (int i = 2; i < split2.length; i++) {
+                    friends.add(Integer.parseInt(split2[i].strip()));
+                }
+
+                //adds to hashset to manage adding friends
+                nodes.put(node, friends);
             }
             // note that Scanner suppresses exceptions
             if (sc.ioException() != null) {
@@ -64,6 +71,13 @@ public class SocialNetwork implements SocialNetworkInterface {
             }
         } catch (IOException e) {
             logger.severe("Error reading files. Error: " + e.getMessage());
+        }
+
+        for (Node node : nodes.keySet()) { // iterates over nodes added
+            for (Integer friend : nodes.get(node)) { //iterates over friends
+                //locates friend in hashtable, adds them as a friend
+                sn.addEdge(node, sn.nodeList.get(friend));
+            }
         }
     }
 
