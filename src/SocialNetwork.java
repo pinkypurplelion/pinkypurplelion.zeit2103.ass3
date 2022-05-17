@@ -23,7 +23,7 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     public SocialNetwork() {
         sn = new Graph();
-//        processFile();
+        processFile();
     }
 
     /**
@@ -76,7 +76,11 @@ public class SocialNetwork implements SocialNetworkInterface {
         for (Node node : nodes.keySet()) { // iterates over nodes added
             for (Integer friend : nodes.get(node)) { //iterates over friends
                 //locates friend in hashtable, adds them as a friend
-                sn.addEdge(node, sn.nodeList.get(friend));
+                try {
+                    sn.addEdge(node, sn.nodeList.get(friend));
+                } catch (RuntimeException e) {
+                    System.out.println("Error when adding edge: " + e.getMessage());
+                }
             }
         }
     }
