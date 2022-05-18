@@ -1,8 +1,10 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 
 
@@ -65,10 +67,10 @@ public class Graph implements GraphInterface {
     public void removeEdge(Node from, Node to) {
         // test line
         System.out.println("Deleting conection between: " + from + "and " + from.adj.get(to.getId()));
-        
-        from.adj.remove(to.getId());
-        to.adj.remove(from.getId());
-        
+        if (from.adj.containsValue(to)) {
+            from.adj.remove(to.getId());
+            to.adj.remove(from.getId());
+        }
         // Test
         System.out.println("conection deleted? " + (from.adj.get(to.getId()) == null));
         System.out.println("conection deleted? " + (to.adj.get(from.getId()) == null));
@@ -134,6 +136,15 @@ public class Graph implements GraphInterface {
          // 
      }
 
+    public Set<Edge> getNeighbors(Node node) {
+        HashSet <Edge> neighbors = new HashSet <Edge> ();
+        for (Node n: node.adj.values()) 
+        {
+            Edge relationship = new Edge(node, n);
+            neighbors.add(relationship);
+        }
+        return neighbors;
+    }
 
     /**
      * Test main that creates a graph,
