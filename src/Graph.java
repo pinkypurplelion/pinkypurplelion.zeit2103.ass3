@@ -62,6 +62,20 @@ public class Graph implements GraphInterface {
         //
     }
      
+    public void removeEdge(Node from, Node to) {
+        // test line
+        System.out.println("Deleting conection between: " + from + "and " + from.adj.get(to.getId()));
+        
+        from.adj.remove(to.getId());
+        to.adj.remove(from.getId());
+        
+        // Test
+        System.out.println("conection deleted? " + (from.adj.get(to.getId()) == null));
+        System.out.println("conection deleted? " + (to.adj.get(from.getId()) == null));
+        System.out.println(from.adj.get(to.getId()));
+        // 
+    }
+
 
     public void removeNode(Node node)
      {
