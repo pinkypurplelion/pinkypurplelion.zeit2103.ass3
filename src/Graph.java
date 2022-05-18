@@ -24,8 +24,18 @@ public class Graph implements GraphInterface {
      */
     protected HashMap<Integer, Node> nodeList = new HashMap<>();
      
+    // Counter variable
     int count = 0; 
 
+    /**
+     * Adds a Node to the graph. This create the object from the
+     *  parameter values and will check if the Node already exists.
+     * If it doesn't, it is added to nodeList. 
+     *
+     * @param id Integer, name String, dob LocalDate, suburb String
+     * @return Node returns the Node created
+     *
+     */
     public Node addNode(Integer id, String name, LocalDate dob, String suburb)
     {
         Node newPers = new Node(id,  name,  dob,  suburb);
@@ -39,6 +49,15 @@ public class Graph implements GraphInterface {
         // throw exception - if the person cannot be added to the map or regardless? Where is return
     }
 
+    /**
+     * Adds an edge between two Nodes. This will check if an edge already exists
+     * between the two Nodes, and if it doesn't, creates one. This process
+     * involves adding the relationship to both Nodes map of friends.
+     *
+     * @param from @Node, to @Node
+     * @return none
+     *
+     */
     public void addEdge(Node from, Node to)
     {
         //Only checks the connection of one Node and they are made simultaneously. 
@@ -64,6 +83,15 @@ public class Graph implements GraphInterface {
         //
     }
      
+    /**
+     * Removes an edge associated with a Node. This will check the 
+     * Node's associated with'from' to see if any are 'to'. If there
+     * is a match, the relationship is removed.
+     *
+     * @param from @Node, to @Node
+     * @return none
+     *
+     */
     public void removeEdge(Node from, Node to) {
         // test line
         System.out.println("Deleting conection between: " + from + "and " + from.adj.get(to.getId()));
@@ -78,7 +106,15 @@ public class Graph implements GraphInterface {
         // 
     }
 
-
+    /**
+     * Removes a Node from the graph. This will remove a Node from the graph by
+     * removing the edges associated to is (if any) and then the Node itself
+     * 
+     *
+     * @param node @Node
+     * @return none
+     *
+     */
     public void removeNode(Node node)
      {
     	// Test
@@ -136,6 +172,16 @@ public class Graph implements GraphInterface {
          // 
      }
 
+    
+    /**
+     * Returns a set of Edges associated to a Node. 
+     *
+     * Acts as retrieving the neighbors of the node in the graph 
+     * 
+     * @param node @Node
+     * @return a set of Edge objects associated to the parameter
+     *
+     */
     public Set<Edge> getNeighbors(Node node) {
         HashSet <Edge> neighbors = new HashSet <Edge> ();
         for (Node n: node.adj.values()) 
