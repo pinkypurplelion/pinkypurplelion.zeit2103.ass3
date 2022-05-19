@@ -26,6 +26,10 @@ public class SocialNetwork implements SocialNetworkInterface {
         processFile();
         System.out.println(suggestFriends(sn.nodeList.get(1)));
         System.out.println(remindBDEvents(sn.nodeList.get(1)));
+
+        System.out.println(sn.nodeList.get(2).compareTo(sn.nodeList.get(1)));
+        System.out.println(sn.nodeList.get(1));
+        System.out.println(sn.nodeList.get(2));
     }
 
     /**
@@ -127,17 +131,27 @@ public class SocialNetwork implements SocialNetworkInterface {
     @Override
     public String remindBDEvents(Node currentPerson) {
         LocalDate date = LocalDate.now();
-//        PriorityQueue<Node> friends = new PriorityQueue<>(currentPerson.adj.values().size(), new NodeComparator());
-//        friends.addAll(currentPerson.adj.values());
-        PriorityQueue<Node> friends = new PriorityQueue<>(currentPerson.adj.values());
-        System.out.println(friends);
-        StringBuilder sb = new StringBuilder();
-        sb.append("Hello " + currentPerson.getName() + ": \n");
+        PriorityQueue<Node> friends = new PriorityQueue<>(
+                currentPerson.adj.values().size(),
+                new NodeComparator());
         for (Node n :
-                friends) {
-            sb.append(n.getName() + " has their birthday in " + n.getDateOB() +" \n");
+                currentPerson.adj.values()) {
+            friends.add(n);
         }
-        return sb.toString();
+
+        while (!friends.isEmpty())
+            System.out.println(friends.poll());
+//        friends.addAll(currentPerson.adj.values());
+//        PriorityQueue<Node> friends = new PriorityQueue<>(currentPerson.adj.values());
+//        System.out.println(friends);
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Hello " + currentPerson.getName() + ": \n");
+//        for (Node n :
+//                friends) {
+//            sb.append(n.getName() + " has their birthday in " + n.getDateOB() +" \n");
+//        }
+//        return sb.toString();
+        return "";
     }
 
     /**

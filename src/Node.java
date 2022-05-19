@@ -178,15 +178,18 @@ class Node implements NodeInteface, Comparable<Node> {
         int day = o.getDateOB().getDayOfMonth();
         if (month < this.dateOB.getMonthValue()) return 1;
         else if (month > this.dateOB.getMonthValue()) return -1;
-        else if (day < this.dateOB.getDayOfMonth()) return 1;
-        else if (day > this.dateOB.getDayOfMonth()) return -1;
+//        else if (day < this.dateOB.getDayOfMonth()) return 1;
+//        else if (day > this.dateOB.getDayOfMonth()) return -1;
         return 0;
     }
 }
 
 class NodeComparator implements Comparator<Node> {
     public int compare(Node a, Node b) {
-        System.out.println(a.getDateOB().compareTo(b.getDateOB()));
-        return a.getDateOB().compareTo(b.getDateOB());
+        int month = a.getDateOB().getMonthValue();
+        int day = a.getDateOB().getDayOfMonth();
+        if (month < b.getDateOB().getMonthValue()) return 1;
+        else if (month > b.getDateOB().getMonthValue()) return -1;
+        return 0;
     }
 }
