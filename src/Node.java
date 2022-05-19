@@ -1,9 +1,9 @@
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a vertex in the graph with its adjacency list of edges.
@@ -170,5 +170,11 @@ class Node implements NodeInteface {
         if (seedS.length() < hashLength)
             return (int) seedSqrd;
         return Integer.parseInt(seedS.substring(seedS.length()/2-(hashLength/2), seedS.length()/2+(hashLength/2)));
+    }
+}
+
+class NodeComparator implements Comparator<Node> {
+    public int compare(Node a, Node b) {
+        return a.getDateOB().compareTo(b.getDateOB());
     }
 }

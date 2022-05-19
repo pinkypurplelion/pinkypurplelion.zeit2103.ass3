@@ -25,6 +25,7 @@ public class SocialNetwork implements SocialNetworkInterface {
         sn = new Graph();
         processFile();
         System.out.println(suggestFriends(sn.nodeList.get(1)));
+        System.out.println(remindBDEvents(sn.nodeList.get(1)));
     }
 
     /**
@@ -125,7 +126,16 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public String remindBDEvents(Node currentPerson) {
-        return null;
+        LocalDate date = LocalDate.now();
+        PriorityQueue<Node> friends = new PriorityQueue<>(currentPerson.adj.values().size(), new NodeComparator());
+        friends.addAll(currentPerson.adj.values());
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello " + currentPerson.getName() + ": \n");
+        for (Node n :
+                friends) {
+            sb.append(n.getName() + " has their birthday in " + n.getDateOB() +" \n");
+        }
+        return sb.toString();
     }
 
     /**

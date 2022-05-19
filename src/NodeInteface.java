@@ -65,5 +65,4 @@ public interface NodeInteface {
      * otherwise.
      */
     public boolean equals(Object obj);
-
 }
