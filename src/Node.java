@@ -11,7 +11,7 @@ import java.util.List;
  * @version 2.0, April 2022
  * @author Saber Elsayed
  */
-class Node implements NodeInteface {
+class Node implements NodeInteface, Comparable<Node> {
 
     //id
     private Integer id;
@@ -171,10 +171,22 @@ class Node implements NodeInteface {
             return (int) seedSqrd;
         return Integer.parseInt(seedS.substring(seedS.length()/2-(hashLength/2), seedS.length()/2+(hashLength/2)));
     }
+
+    @Override
+    public int compareTo(Node o) {
+        int month = o.getDateOB().getMonthValue();
+        int day = o.getDateOB().getDayOfMonth();
+        if (month < this.dateOB.getMonthValue()) return 1;
+        else if (month > this.dateOB.getMonthValue()) return -1;
+        else if (day < this.dateOB.getDayOfMonth()) return 1;
+        else if (day > this.dateOB.getDayOfMonth()) return -1;
+        return 0;
+    }
 }
 
 class NodeComparator implements Comparator<Node> {
     public int compare(Node a, Node b) {
+        System.out.println(a.getDateOB().compareTo(b.getDateOB()));
         return a.getDateOB().compareTo(b.getDateOB());
     }
 }
