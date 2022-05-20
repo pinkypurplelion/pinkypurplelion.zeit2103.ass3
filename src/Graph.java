@@ -195,6 +195,35 @@ public class Graph implements GraphInterface {
     }
 
     /**
+     * Returns a String to display all the Nodes and the Nodes they share an edge with.
+     * 
+     * This represents the network graph by displaying the String of the person's name, and their friends.
+     * 
+     * @param none
+     * @return a String of all the Nodes within nodeList, and all the Nodes associated to it through edges
+     *
+     */
+    @Override
+     public String toString()
+     {
+    	StringBuilder nodeString = new StringBuilder();  
+        for(Node person: nodeList.values()) {
+            nodeString.append(person.getName() + " --> ");
+            for(Node friend: person.adj.values()) {
+                nodeString.append(friend.getName() + " ");
+            }
+            nodeString.append("\n");
+        }
+        return (nodeString.toString()); 
+         
+         // test
+         // no edges made ---> expect nothing after each person in graph
+         // one edge made ---> expect wylie to have alimah and alimah to have wylie
+         // two edges made with a person in common ---> that person has two names, other people have name of person in common expect wylie to alimah, sarah to alimah, alimah to sarah and wylie
+//         System.out.println(g.toString());
+     }
+
+    /**
      * Test main that creates a graph,
      *
      * @param args command-line arguments (not used)
