@@ -39,14 +39,16 @@ public class Graph implements GraphInterface {
     public Node addNode(Integer id, String name, LocalDate dob, String suburb)
     {
         Node newPers = new Node(id,  name,  dob,  suburb);
-        if (!nodeList.containsKey(id))
+        if (!nodeList.containsValue(new Node(id,name,dob,suburb)))
         {
             count = count + 1;
             nodeList.put(count, newPers);
+            return newPers;
         } 
-        return newPers;
-        // LAB 
-        // throw exception - if the person cannot be added to the map or regardless? Where is return
+        else
+        {
+            throw new RuntimeException(name + " is already in graph.");
+        }
     }
 
     /**
