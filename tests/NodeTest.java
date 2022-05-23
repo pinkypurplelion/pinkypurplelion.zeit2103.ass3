@@ -69,7 +69,7 @@ class NodeTest {
     void testToString() {
         // TODO: do we implement?
     }
-    
+
     @Test
     void testEquals() {
         System.out.println("Testing Node.equals()");

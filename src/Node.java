@@ -84,8 +84,9 @@ class Node implements NodeInteface {
     }
 
     /**
+     * Converts the Node object into a String
      *
-     * @return
+     * @return A string representation of the node
      */
     @Override
     public String toString() {
