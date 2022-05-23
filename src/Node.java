@@ -23,10 +23,10 @@ class Node implements NodeInteface {
     //suburb a person lives at
     private String suburb;
 
+    //contains a list of all friends of a person object
+    protected HashMap<Integer, Edge> adj;
     //contains a list of all firends of a person object
-    // protected HashMap<Integer, Edge> adj;
-    //contains a list of all firends of a person object
-    protected HashMap<Integer, Node> adj = new HashMap<Integer, Node>();
+    // protected HashMap<Integer, Node> adj = new HashMap<Integer, Node>();
 
     // contains list of friends of a node (edge)
     protected List<Node> connectionList = new ArrayList<>();

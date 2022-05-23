@@ -68,8 +68,12 @@ public class Graph implements GraphInterface {
             if (!from.adj.containsKey(to.getId()))
             {
                 // Edge created for each Node as the graph is undirected
-                from.adj.put(to.getId(), to);
-                to.adj.put(from.getId(), from);
+                // from.adj.put(to.getId(), to);
+                // to.adj.put(from.getId(), from);
+                Edge friend = new Edge(to);
+                from.adj.put(to.getId(), friend);
+                Edge friendOtherWay = new Edge(from);
+                to.adj.put(from.getId(), friendOtherWay);
             }
             else 
             {
@@ -80,15 +84,6 @@ public class Graph implements GraphInterface {
         {
             throw new RuntimeException("Edge to be created has Nodes with null values.");
         }
-        
-       // Test
-        System.out.println(from.getName() + " is friends with " + to.getName());
-        System.out.println(to.getName() + " is friends with " + from.getName());
-        System.out.println("CHECK");
-        System.out.println(from.getName() + "'s friends:");
-        System.out.println(from.adj);
-        System.out.println(to.adj.get(from.getId()));
-        //
     }
      
     /**
@@ -101,17 +96,10 @@ public class Graph implements GraphInterface {
      *
      */
     public void removeEdge(Node from, Node to) {
-        // test line
-        System.out.println("Deleting conection between: " + from + "and " + from.adj.get(to.getId()));
-        if (from.adj.containsValue(to)) {
+        if (from.adj.get(to.getId()).friend == to) {
             from.adj.remove(to.getId());
             to.adj.remove(from.getId());
         }
-        // Test
-        System.out.println("conection deleted? " + (from.adj.get(to.getId()) == null));
-        System.out.println("conection deleted? " + (to.adj.get(from.getId()) == null));
-        System.out.println(from.adj.get(to.getId()));
-        // 
     }
 
     /**
@@ -124,19 +112,12 @@ public class Graph implements GraphInterface {
      *
      */
     public void removeNode(Node node)
-     {
-    	// Test
-         System.out.println("Remove Node test before removing ");
-         System.out.println("NODE TO BE REMOVED: " + node);
-         System.out.println("NODE FRIENDS: " + node.adj.values());
-         System.out.println("NODE FRIEND FRIENDS: " + node.adj.get(6).adj.values());         
-         // 
-         
-    	 if(nodeList.containsValue(node))
-    	 {
-    		 // Checks if Node has any edges associated to it
-    		 if (!node.adj.isEmpty())
-    		 {
+    {
+        if(nodeList.containsValue(node))
+        {
+            // Checks if Node has any edges associated to it
+            if (!node.adj.isEmpty())
+            {
     			 // If it does, find those edges
 		        List<Integer> listOfFriends = new ArrayList<Integer>();
 		           
@@ -171,22 +152,12 @@ public class Graph implements GraphInterface {
                 }
             }
 	        nodeList.remove(counter);
-
-	        // test line
-        	System.out.println("node removed? "+ (nodeList.get(node.getId()) == null));
-    	 }
-    	 else
-    	 {
-    		 throw new IllegalStateException(node.getName() + " is not in graph.");
-    	 }
-    		
-    	 // Test
-         System.out.println("Remove Node test");
-         System.out.println("NODE TO BE REMOVED: " + node);
-         System.out.println("NODE FRIENDS: " + node.adj.values());
-//         System.out.println("NODE FRIEND FRIENDS: " + node.adj.get(6).adj.values()); // should return exception as there are now no friends to see the connections associated to them
-         // 
-     }
+        }
+        else
+        {
+            throw new IllegalStateException(node.getName() + " is not in graph.");
+        }
+    }
 
     
     /**
@@ -200,10 +171,9 @@ public class Graph implements GraphInterface {
      */
     public Set<Edge> getNeighbors(Node node) {
         HashSet <Edge> neighbors = new HashSet <Edge> ();
-        for (Node n: node.adj.values()) 
+        for (Edge e: node.adj.values()) 
         {
-            Edge relationship = new Edge(node, n);
-            neighbors.add(relationship);
+            neighbors.add(e);
         }
         return neighbors;
     }
@@ -223,8 +193,8 @@ public class Graph implements GraphInterface {
     	StringBuilder nodeString = new StringBuilder();  
         for(Node person: nodeList.values()) {
             nodeString.append(person.getName() + " --> ");
-            for(Node friend: person.adj.values()) {
-                nodeString.append(friend.getName() + " ");
+            for(Edge friend: person.adj.values()) {
+                nodeString.append(friend.friend.getName() + " ");
             }
             nodeString.append("\n");
         }

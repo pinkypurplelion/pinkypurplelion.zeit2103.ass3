@@ -2,13 +2,12 @@
  *
  */
 public class Edge {
-	protected Node source;
     protected Node friend;
     
-    public Edge(Node friend, Node otherFriend) {
-    	this.source = friend;
-        this.friend = otherFriend;
+    public Edge(Node friend) {
+    	this.friend = friend;
     }
+
 
     @Override
     public String toString() {
