@@ -162,7 +162,15 @@ public class Graph implements GraphInterface {
 		        	
 		        }
     		}
-	        nodeList.remove(node.getId());
+            int counter;
+            for (counter = 0; counter < nodeList.size(); counter++)
+            {
+                if (nodeList.get(counter) == node)
+                {
+                    break;
+                }
+            }
+	        nodeList.remove(counter);
 
 	        // test line
         	System.out.println("node removed? "+ (nodeList.get(node.getId()) == null));
