@@ -1,9 +1,9 @@
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a vertex in the graph with its adjacency list of edges.
@@ -11,7 +11,7 @@ import java.util.Objects;
  * @version 2.0, April 2022
  * @author Saber Elsayed
  */
-class Node implements NodeInteface {
+class Node implements NodeInteface, Comparable<Node> {
 
     //id
     private Integer id;
@@ -167,5 +167,26 @@ class Node implements NodeInteface {
         if (seedS.length() < hashLength)
             return (int) seedSqrd;
         return Integer.parseInt(seedS.substring(seedS.length()/2-(hashLength/2), seedS.length()/2+(hashLength/2)));
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        int month = o.getDateOB().getMonthValue();
+        int day = o.getDateOB().getDayOfMonth();
+        if (month < this.dateOB.getMonthValue()) return 1;
+        else if (month > this.dateOB.getMonthValue()) return -1;
+//        else if (day < this.dateOB.getDayOfMonth()) return 1;
+//        else if (day > this.dateOB.getDayOfMonth()) return -1;
+        return 0;
+    }
+}
+
+class NodeComparator implements Comparator<Node> {
+    public int compare(Node a, Node b) {
+        int month = a.getDateOB().getMonthValue();
+        int day = a.getDateOB().getDayOfMonth();
+        if (month < b.getDateOB().getMonthValue()) return 1;
+        else if (month > b.getDateOB().getMonthValue()) return -1;
+        return 0;
     }
 }
