@@ -69,10 +69,30 @@ class NodeTest {
     void testToString() {
         // TODO: do we implement?
     }
-
-    // TODO: implement
+    
     @Test
     void testEquals() {
+        System.out.println("Testing Node.equals()");
+        for (String[] object : data) {
+            Node nodeA = new Node(Integer.valueOf(object[0]), object[1], LocalDate.parse(object[3]), object[2]);
+            Node nodeB = new Node(Integer.valueOf(object[0]), object[1], LocalDate.parse(object[3]), object[2]);
+            System.out.println(nodeA + " equals " + nodeB);
+            assertEquals(nodeA, nodeB);
+            assertEquals(nodeB, nodeA);
+            assertEquals(nodeA, nodeA);
+            assertEquals(nodeB, nodeB);
+        }
+        System.out.println();
+        for (int i = 0; i < data.length; i++) {
+            String[] objectA = data[i];
+            String[] objectB = data[(i+1)%data.length];
+            Node nodeA = new Node(Integer.valueOf(objectA[0]), objectA[1], LocalDate.parse(objectA[3]), objectA[2]);
+            Node nodeB = new Node(Integer.valueOf(objectB[0]), objectB[1], LocalDate.parse(objectB[3]), objectB[2]);
+            System.out.println(nodeA + " does not equal " + nodeB);
+            assertFalse(nodeA.equals(nodeB));
+            assertFalse(nodeB.equals(nodeA));
+        }
+        System.out.println("Testing Complete \n");
     }
 
     /*
