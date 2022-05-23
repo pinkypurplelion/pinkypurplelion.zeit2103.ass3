@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 
-
 /**
  * constructs an undirected graph with some basic operations: addNode,
  * removeNode, addEdge, getNeighbors, etc.
@@ -222,6 +221,7 @@ public class Graph implements GraphInterface {
          // two edges made with a person in common ---> that person has two names, other people have name of person in common expect wylie to alimah, sarah to alimah, alimah to sarah and wylie
 //         System.out.println(g.toString());
      }
+
 
     /**
      * Test main that creates a graph,
