@@ -84,8 +84,9 @@ class Node implements NodeInteface {
     }
 
     /**
+     * Converts the Node object into a String
      *
-     * @return
+     * @return A string representation of the node
      */
     @Override
     public String toString() {
@@ -107,7 +108,10 @@ class Node implements NodeInteface {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return id.equals(node.id) && name.equals(node.name) && dateOB.equals(node.dateOB) && suburb.equals(node.suburb);
+        return id.equals(node.id)
+                && name.equals(node.name)
+                && dateOB.equals(node.dateOB)
+                && suburb.equals(node.suburb);
     }
 
     /**
@@ -119,10 +123,8 @@ class Node implements NodeInteface {
      */
     @Override
     public int hashCode() {
-        int hashIterations = 2;
         // multiples of 2 because references index
         int subSeedLen = 6;
-        int seedLength = 10;
         int hashLength = 8;
 
         StringBuilder nameChar = new StringBuilder();
@@ -132,7 +134,10 @@ class Node implements NodeInteface {
         }
         int nameSeed;
         if (nameChar.length() > subSeedLen)
-            nameSeed = Integer.parseInt(nameChar.substring(nameChar.length()/2-(subSeedLen/2), nameChar.length()/2+(subSeedLen/2)));
+            nameSeed = Integer.parseInt(
+                    nameChar.substring(
+                            nameChar.length()/2-(subSeedLen/2),
+                            nameChar.length()/2+(subSeedLen/2)));
         else
             nameSeed = Integer.parseInt(nameChar.toString());
 
@@ -143,7 +148,10 @@ class Node implements NodeInteface {
         }
         int suburbSeed;
         if (suburbChar.length() > subSeedLen)
-            suburbSeed = Integer.parseInt(suburbChar.substring(suburbChar.length()/2-(subSeedLen/2), suburbChar.length()/2+(subSeedLen/2)));
+            suburbSeed = Integer.parseInt(
+                    suburbChar.substring(
+                            suburbChar.length()/2-(subSeedLen/2),
+                            suburbChar.length()/2+(subSeedLen/2)));
         else
             suburbSeed = Integer.parseInt(suburbChar.toString());
 
@@ -154,17 +162,6 @@ class Node implements NodeInteface {
         long seedSqrd = seed * seed;
         if (seedSqrd < 0) seedSqrd *= -1;
 
-        // low iterations: no impact on collision %
-        // high iterations: increase collision %
-//        for (int i = 0; i < hashIterations; i++) {
-//            String seedStr = Long.toString(seedSqrd);
-//            if (seedStr.length() < seedLength)
-//                seed = (int) seedSqrd;
-//            else
-//                seed = Long.parseLong(seedStr.substring(seedStr.length()/2-(seedLength/2), seedStr.length()/2+(seedLength/2)));
-//            seedSqrd = seed * seed;
-//            if (seedSqrd < 0) seedSqrd *= -1;
-//        }
         String seedS = Long.toString(seedSqrd);
 
         if (seedS.length() < hashLength)
