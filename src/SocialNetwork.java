@@ -77,7 +77,7 @@ public class SocialNetwork implements SocialNetworkInterface {
         } catch (IOException e) {
             logger.severe("Error reading files. Error: " + e.getMessage());
         }
-
+//        System.out.println(sn.nodeList);
         for (Node node : nodes.keySet()) { // iterates over nodes added
             for (Integer friend : nodes.get(node)) { //iterates over friends
                 //locates friend in hashtable, adds them as a friend
@@ -102,20 +102,20 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public List<Node> suggestFriends(Node currentPerson) {
-        HashMap<Integer, Node> currentFriends = currentPerson.adj;
-        HashSet<Node> friendsOfFriends = new HashSet<>();
+        HashMap<Integer, Edge> currentFriends = currentPerson.adj;
+        HashSet<Edge> friendsOfFriends = new HashSet<>();
         List<Node> suggestedFriends = new ArrayList<>();
 
         //adds all friends of friends to the set
-        for (Node friend : currentFriends.values()) {
-            friendsOfFriends.addAll(friend.adj.values());
+        for (Edge friend : currentFriends.values()) {
+            friendsOfFriends.addAll(friend.friend.adj.values());
         }
         System.out.println("current friends: " + currentFriends.values());
         System.out.println("friends of friends: " + friendsOfFriends);
 
-        for (Node person : friendsOfFriends) {
-            if (Objects.equals(person.getSuburb(), currentPerson.getSuburb()))
-                suggestedFriends.add(person);
+        for (Edge person : friendsOfFriends) {
+            if (Objects.equals(person.friend.getSuburb(), currentPerson.getSuburb()))
+                suggestedFriends.add(person.friend);
         }
         return suggestedFriends;
     }
@@ -134,10 +134,10 @@ public class SocialNetwork implements SocialNetworkInterface {
         PriorityQueue<Node> friends = new PriorityQueue<>(
                 currentPerson.adj.values().size(),
                 new NodeComparator());
-        for (Node n :
-                currentPerson.adj.values()) {
-            friends.add(n);
-        }
+//        for (Node n :
+//                currentPerson.adj.values()) {
+//            friends.add(n);
+//        }
 
         while (!friends.isEmpty())
             System.out.println(friends.poll());
@@ -164,13 +164,13 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public List<String> getMutualFriends(Node x, Node y) {
-        HashMap<Integer, Node> xFriends = x.adj;
-        HashMap<Integer, Node> yFriends = y.adj;
+        HashMap<Integer, Edge> xFriends = x.adj;
+        HashMap<Integer, Edge> yFriends = y.adj;
         List<String> mutualFriends = new ArrayList<>();
-        for (Node friend :
+        for (Edge friend :
                 xFriends.values()) {
             if (yFriends.containsValue(friend))
-                mutualFriends.add(friend.getName());
+                mutualFriends.add(friend.friend.getName());
         }
         return mutualFriends;
     }

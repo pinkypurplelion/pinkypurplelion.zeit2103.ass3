@@ -24,7 +24,7 @@ class Node implements NodeInteface, Comparable<Node> {
     private String suburb;
 
     //contains a list of all friends of a person object
-    protected HashMap<Integer, Edge> adj;
+    protected HashMap<Integer, Edge> adj = new HashMap<>();
     //contains a list of all firends of a person object
     // protected HashMap<Integer, Node> adj = new HashMap<Integer, Node>();
 
