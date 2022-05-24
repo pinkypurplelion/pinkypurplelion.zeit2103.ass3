@@ -24,19 +24,6 @@ public class SocialNetwork implements SocialNetworkInterface {
     public SocialNetwork() {
         sn = new Graph();
         processFile();
-        System.out.println(suggestFriends(sn.nodeList.get(1)));
-        System.out.println(remindBDEvents(sn.nodeList.get(1)));
-
-        System.out.println(sn.nodeList.get(2).compareTo(sn.nodeList.get(1)));
-        System.out.println(sn.nodeList.get(1));
-        System.out.println(sn.nodeList.get(2));
-    }
-
-    /**
-     * @param args N/A
-     */
-    public static void main(String[] args) {
-        SocialNetwork driver = new SocialNetwork();
     }
 
     /**
@@ -77,7 +64,6 @@ public class SocialNetwork implements SocialNetworkInterface {
         } catch (IOException e) {
             logger.severe("Error reading files. Error: " + e.getMessage());
         }
-//        System.out.println(sn.nodeList);
         for (Node node : nodes.keySet()) { // iterates over nodes added
             for (Integer friend : nodes.get(node)) { //iterates over friends
                 //locates friend in hashtable, adds them as a friend
