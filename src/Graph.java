@@ -22,9 +22,6 @@ public class Graph implements GraphInterface {
      * holds all nodes (people) in this graph
      */
     protected HashMap<Integer, Node> nodeList = new HashMap<>();
-     
-    // Counter variable
-    int count = 0; 
 
     /**
      * Adds a Node to the graph. This create the object from the
@@ -40,8 +37,7 @@ public class Graph implements GraphInterface {
         Node newPers = new Node(id,  name,  dob,  suburb);
         if (!nodeList.containsValue(new Node(id,name,dob,suburb)))
         {
-            count = count + 1;
-            nodeList.put(count, newPers);
+            nodeList.put(id, newPers);
             return newPers;
         } 
         else
