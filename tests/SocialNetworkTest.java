@@ -25,7 +25,7 @@ class SocialNetworkTest {
 
     @Test
     void suggestFriends() {
-        assertEquals(9, socialNetwork.suggestFriends(socialNetwork.sn.nodeList.get(9001)).size());
+        assertEquals(6, socialNetwork.suggestFriends(socialNetwork.sn.nodeList.get(9001)).size());
     }
 
     @Test

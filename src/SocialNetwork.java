@@ -102,6 +102,7 @@ public class SocialNetwork implements SocialNetworkInterface {
             if (Objects.equals(person.friend.getSuburb(), currentPerson.getSuburb()))
                 suggestedFriends.add(person.friend);
         }
+        System.out.println("suggested friends: " + suggestedFriends);
         return suggestedFriends;
     }
 

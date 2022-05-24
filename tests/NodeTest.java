@@ -29,10 +29,6 @@ class NodeTest {
             {"126", "Heyoooo", "Dadada Kinga", "2003-12-30"},
     };
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void getId() {
         for (String[] object : data) {
@@ -66,12 +62,6 @@ class NodeTest {
     }
 
     @Test
-    void testToString() {
-        fail();
-        // TODO: do we implement?
-    }
-
-    @Test
     void testEquals() {
         System.out.println("Testing Node.equals()");
         for (String[] object : data) {
@@ -96,17 +86,6 @@ class NodeTest {
         System.out.println("Testing Complete \n");
     }
 
-    /*
-    TODO: implement test
-    TODO: test for seed < middle section being pulled out
-    TODO: test for
-     */
-    @Test
-    void testHashCode() {
-        fail();
-    }
-
-    // TODO: implement tests
     @Test
     void testHashCodeCollisions() {
         Set<Integer> hashes = new HashSet<>();
