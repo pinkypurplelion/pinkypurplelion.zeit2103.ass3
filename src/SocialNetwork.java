@@ -84,7 +84,6 @@ public class SocialNetwork implements SocialNetworkInterface {
      * @param currentPerson @Node
      * @return a list of no more than 5 friends
      *
-     * TODO: test
      */
     @Override
     public List<Node> suggestFriends(Node currentPerson) {
