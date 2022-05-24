@@ -35,6 +35,13 @@ public class Graph implements GraphInterface {
     public Node addNode(Integer id, String name, LocalDate dob, String suburb)
     {
         Node newPers = new Node(id,  name,  dob,  suburb);
+        for (Node person : nodeList.values())
+        {
+            if (person.getId() == id)
+            {
+                throw new RuntimeException("The id: " + id + " is already associated to a Node within the Graph");
+            }
+        }
         if (!nodeList.containsValue(new Node(id,name,dob,suburb)))
         {
             nodeList.put(id, newPers);
