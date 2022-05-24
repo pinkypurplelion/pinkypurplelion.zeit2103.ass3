@@ -35,6 +35,13 @@ public class Graph implements GraphInterface {
     public Node addNode(Integer id, String name, LocalDate dob, String suburb)
     {
         Node newPers = new Node(id,  name,  dob,  suburb);
+        for (Node person : nodeList.values())
+        {
+            if (person.getId() == id)
+            {
+                throw new RuntimeException("The id: " + id + " is already associated to a Node within the Graph");
+            }
+        }
         if (!nodeList.containsValue(new Node(id,name,dob,suburb)))
         {
             nodeList.put(id, newPers);
@@ -112,47 +119,37 @@ public class Graph implements GraphInterface {
         if(nodeList.containsValue(node))
         {
             // Checks if Node has any edges associated to it
-            if (!node.adj.isEmpty())
+            if (!node.adj.values().isEmpty())
             {
-    			 // If it does, find those edges
-		        List<Integer> listOfFriends = new ArrayList<Integer>();
-		           
-		        // Reverse the HashMap so Friends of Nodes can be recorded
-		        // Go through each entry within the nodeList 
-		        for (HashMap.Entry<Integer, Node> entry : nodeList.entrySet()) 
-		        {
-		            // If 
-		            if (entry.getValue().adj.containsValue(node))
-		            {
-		                // Store the key from entry to the list
-		                listOfFriends.add(entry.getKey());
-		            }
-		        }
-		        
-		        for (Integer id : listOfFriends)
-		        {
-		        	nodeList.get(id).adj.remove(node.getId());
-		        	// As the keys in nodeList do no correspond to the keys in the adj list of each Node, 
-		        	// the Node is retrieved from nodeList, with the id (key in adj) of the node being removed's friend  
-		        	// is used to remove the connection within the node being removed's adj map. 
-		        	node.adj.remove(nodeList.get(id).getId()); 
-		        	
-		        }
-    		}
-            int counter;
-            for (counter = 0; counter < nodeList.size(); counter++)
-            {
-                if (nodeList.get(counter) == node)
-                {
-                    break;
-                }
+                // If it does, find those edges
+               List<Integer> listOfFriends = new ArrayList<Integer>();
+               // Reverse the HashMap so Friends of Nodes can be recorded
+               // Go through each entry within the nodeList 
+               for (HashMap.Entry<Integer, Node> entry : nodeList.entrySet()) 
+               {
+                   if (entry.getValue().adj.containsKey(node.getId()))
+                   {
+                       // Store the key from entry to the list
+                       listOfFriends.add(entry.getKey());
+                   }
+               }
+               for (Integer id : listOfFriends)
+               {
+                   nodeList.get(id).adj.remove(node.getId());
+                   // As the keys in nodeList do no correspond to the keys in the adj list of each Node, 
+                   // the Node is retrieved from nodeList, with the id (key in adj) of the node being removed's friend  
+                   // is used to remove the connection within the node being removed's adj map. 
+                   node.adj.remove(nodeList.get(id).getId()); 
+                   
+               }
             }
-	        nodeList.remove(counter);
+            nodeList.remove(node.getId());
         }
         else
         {
             throw new IllegalStateException(node.getName() + " is not in graph.");
         }
+           
     }
 
     
