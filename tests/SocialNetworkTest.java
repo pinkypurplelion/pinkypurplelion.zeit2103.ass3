@@ -25,7 +25,7 @@ class SocialNetworkTest {
 
     @Test
     void suggestFriends() {
-        fail();
+        assertEquals(9, socialNetwork.suggestFriends(socialNetwork.sn.nodeList.get(9001)).size());
     }
 
     @Test
@@ -35,6 +35,8 @@ class SocialNetworkTest {
 
     @Test
     void getMutualFriends() {
-        fail();
+        Graph sn = socialNetwork.sn;
+        assertEquals(2, socialNetwork.getMutualFriends(sn.nodeList.get(5001), sn.nodeList.get(9001)).size());
+//        fail();
     }
 }
