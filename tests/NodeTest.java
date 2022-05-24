@@ -53,7 +53,7 @@ class NodeTest {
     void getSuburb() {
         for (String[] object : data) {
             Node node = new Node(Integer.valueOf(object[0]), object[1], LocalDate.parse(object[3]), object[2]);
-            assertEquals(object[3], node.getSuburb());
+            assertEquals(object[2], node.getSuburb());
         }
     }
 
@@ -61,12 +61,13 @@ class NodeTest {
     void getDateOB() {
         for (String[] object : data) {
             Node node = new Node(Integer.valueOf(object[0]), object[1], LocalDate.parse(object[3]), object[2]);
-            assertEquals(LocalDate.parse(object[2]), node.getDateOB());
+            assertEquals(LocalDate.parse(object[3]), node.getDateOB());
         }
     }
 
     @Test
     void testToString() {
+        fail();
         // TODO: do we implement?
     }
 
@@ -102,7 +103,7 @@ class NodeTest {
      */
     @Test
     void testHashCode() {
-
+        fail();
     }
 
     // TODO: implement tests

@@ -6,17 +6,21 @@ class SocialNetworkTest {
 
     @Test
     void processFile() {
+        fail();
     }
 
     @Test
     void suggestFriends() {
+        fail();
     }
 
     @Test
     void remindBDEvents() {
+        fail();
     }
 
     @Test
     void getMutualFriends() {
+        fail();
     }
 }
