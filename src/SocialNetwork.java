@@ -116,28 +116,30 @@ public class SocialNetwork implements SocialNetworkInterface {
      */
     @Override
     public String remindBDEvents(Node currentPerson) {
-        LocalDate date = LocalDate.now();
         PriorityQueue<Node> friends = new PriorityQueue<>(
                 currentPerson.adj.values().size(),
                 new NodeComparator());
-//        for (Node n :
-//                currentPerson.adj.values()) {
-//            friends.add(n);
-//        }
+        for (Edge e :
+                currentPerson.adj.values()) {
+            friends.add(e.friend);
+        }
 
-        while (!friends.isEmpty())
-            System.out.println(friends.poll());
-//        friends.addAll(currentPerson.adj.values());
-//        PriorityQueue<Node> friends = new PriorityQueue<>(currentPerson.adj.values());
-//        System.out.println(friends);
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Hello " + currentPerson.getName() + ": \n");
-//        for (Node n :
-//                friends) {
-//            sb.append(n.getName() + " has their birthday in " + n.getDateOB() +" \n");
-//        }
-//        return sb.toString();
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello " + currentPerson.getName() + ": \n");
+        Node friend;
+        while (!friends.isEmpty()) {
+            LocalDate curDate = LocalDate.now();
+            friend = friends.poll();
+            sb.append(friend.getName()
+                    + " has their birthday in "
+                    + "0 years "
+                    + (friend.getDateOB().getMonthValue() - curDate.getMonthValue())
+                    + " months "
+                    + (friend.getDateOB().getDayOfMonth() - curDate.getDayOfMonth())
+                    + " days "
+                    + friend.getDateOB() + " \n");
+        }
+        return sb.toString();
     }
 
     /**

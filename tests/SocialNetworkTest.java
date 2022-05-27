@@ -30,6 +30,9 @@ class SocialNetworkTest {
 
     @Test
     void remindBDEvents() {
+        System.out.println("node testing off: " + socialNetwork.sn.nodeList.get(1));
+        System.out.println(socialNetwork.remindBDEvents(socialNetwork.sn.nodeList.get(1)));
+
         fail();
     }
 
