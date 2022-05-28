@@ -40,22 +40,26 @@ public class SocialNetwork implements SocialNetworkInterface {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
 
-                //splits lines into data segments as an array
-                //needs two splits because of file formatting
+                // splits lines into data segments as an array
+                // needs two splits because of file formatting
                 String[] split = line.split("\t");
                 String[] split2 = split[2].split(",");
 
                 // adds node to graph
-                Node node = sn.addNode(Integer.parseInt(split[0]), split[1], LocalDate.parse(split2[0]), split2[1].strip());
+                Node node = sn.addNode(
+                        Integer.parseInt(split[0]),
+                        split[1],
+                        LocalDate.parse(split2[0]),
+                        split2[1].strip());
 
-                //creates set of nodes friends from file
+                // creates set of nodes friends from file
                 HashSet<Integer> friends = new HashSet<>();
 
                 for (int i = 2; i < split2.length; i++) {
                     friends.add(Integer.parseInt(split2[i].strip()));
                 }
 
-                //adds to hashset to manage adding friends
+                // adds to hashset to manage adding friends
                 nodes.put(node, friends);
             }
             // note that Scanner suppresses exceptions
@@ -65,6 +69,7 @@ public class SocialNetwork implements SocialNetworkInterface {
         } catch (IOException e) {
             logger.severe("Error reading files. Error: " + e.getMessage());
         }
+
         for (Node node : nodes.keySet()) { // iterates over nodes added
             for (Integer friend : nodes.get(node)) { //iterates over friends
                 //locates friend in hashtable, adds them as a friend
@@ -96,14 +101,12 @@ public class SocialNetwork implements SocialNetworkInterface {
         for (Edge friend : currentFriends.values()) {
             friendsOfFriends.addAll(friend.friend.adj.values());
         }
-        System.out.println("current friends: " + currentFriends.values());
-        System.out.println("friends of friends: " + friendsOfFriends);
 
+        // iterates over set of friends and adds their friends to the set
         for (Edge person : friendsOfFriends) {
             if (Objects.equals(person.friend.getSuburb(), currentPerson.getSuburb()))
                 suggestedFriends.add(person.friend);
         }
-        System.out.println("suggested friends: " + suggestedFriends);
         return suggestedFriends;
     }
 
@@ -126,20 +129,22 @@ public class SocialNetwork implements SocialNetworkInterface {
             if (personsFriend.getDateOB().getDayOfYear() < now.getDayOfYear())
                 year += 1;
 
-            LocalDate nextBirthdate = LocalDate.of(year, personsFriend.getDateOB().getMonthValue(), personsFriend.getDateOB().getDayOfMonth());
+            LocalDate nextBirthdate = LocalDate.of(
+                    year,
+                    personsFriend.getDateOB().getMonthValue(),
+                    personsFriend.getDateOB().getDayOfMonth());
             Period timeUntilBday = now.until(nextBirthdate);
-//            System.out.println(timeUntilBday);
-//            int monthDiff = (personsFriend.getDateOB().getMonthValue() - currentPerson.getDateOB().getMonthValue()) % 12;
-//            int dayDiff = personsFriend.getDateOB().getDayOfMonth() - currentPerson.getDateOB().getDayOfMonth();
-//            sb.append(personsFriend.getName()).append(" has their birthday in ").append(personsFriend.getDateOB()).append(" \n");
-        //        	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) \n");
-            sb.append(personsFriend.getName()).append(" has their birthday in ").append(timeUntilBday.getYears()).append(" Year(s),").append(timeUntilBday.getMonths()).append(" Month(s),").append(timeUntilBday.getDays()).append(" Day(s) after you \n");
+            sb.append(personsFriend.getName())
+                    .append(" has their birthday in ")
+                    .append(timeUntilBday.getYears()).append(" Year(s), ")
+                    .append(timeUntilBday.getMonths()).append(" Month(s), ")
+                    .append(timeUntilBday.getDays()).append(" Day(s) \n");
         }
         return sb.toString();
     }
 
     /**
-     * it returns all of friends of a given account sorted based on their
+     * it returns all friends of a given account sorted based on their
      * birthday with a string representing time until their birthday
      *
      * @param currentPerson The person receiving reminders
@@ -173,7 +178,8 @@ public class SocialNetwork implements SocialNetworkInterface {
         }
 
         // Reorders list to be in terms of days until birthday
-        ArrayList<Node> sortedBirthdays = new ArrayList<>(relations.subList(x, relations.size()));
+        ArrayList<Node> sortedBirthdays =
+                new ArrayList<>(relations.subList(x, relations.size()));
         sortedBirthdays.addAll(relations.subList(0, x));
 
         return toString(currentPerson, sortedBirthdays);
