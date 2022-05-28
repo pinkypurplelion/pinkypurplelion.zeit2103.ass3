@@ -117,7 +117,7 @@ public class SocialNetwork implements SocialNetworkInterface {
      * @return A string containing birthday reminders
      * @author Majority Alimah, slight modification by Liam
      */
-    public String toString(Node currentPerson, List<Node> friends) {
+    private String createBDString(Node currentPerson, List<Node> friends) {
         LocalDate now = LocalDate.now();
         StringBuilder sb = new StringBuilder();
 
@@ -181,7 +181,7 @@ public class SocialNetwork implements SocialNetworkInterface {
                 new ArrayList<>(relations.subList(x, relations.size()));
         sortedBirthdays.addAll(relations.subList(0, x));
 
-        return toString(currentPerson, sortedBirthdays);
+        return createBDString(currentPerson, sortedBirthdays);
     }
 
 
