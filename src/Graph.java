@@ -71,8 +71,6 @@ public class Graph implements GraphInterface {
             if (!from.adj.containsKey(to.getId()))
             {
                 // Edge created for each Node as the graph is undirected
-                // from.adj.put(to.getId(), to);
-                // to.adj.put(from.getId(), from);
                 Edge friend = new Edge(to);
                 from.adj.put(to.getId(), friend);
                 Edge friendOtherWay = new Edge(from);
@@ -181,24 +179,18 @@ public class Graph implements GraphInterface {
      *
      */
     @Override
-     public String toString()
-     {
-    	StringBuilder nodeString = new StringBuilder();  
-        for(Node person: nodeList.values()) {
-            nodeString.append(person.getName() + " --> ");
-            for(Edge friend: person.adj.values()) {
-                nodeString.append(friend.friend.getName() + " ");
-            }
-            nodeString.append("\n");
+    public String toString()
+    {
+    StringBuilder nodeString = new StringBuilder();  
+    for(Node person: nodeList.values()) {
+        nodeString.append(person.getName() + " --> ");
+        for(Edge friend: person.adj.values()) {
+            nodeString.append(friend.friend.getName() + " ");
         }
-        return (nodeString.toString()); 
-         
-         // test
-         // no edges made ---> expect nothing after each person in graph
-         // one edge made ---> expect wylie to have alimah and alimah to have wylie
-         // two edges made with a person in common ---> that person has two names, other people have name of person in common expect wylie to alimah, sarah to alimah, alimah to sarah and wylie
-//         System.out.println(g.toString());
-     }
+        nodeString.append("\n");
+    }
+    return (nodeString.toString()); 
+    }
 
 
     /**
