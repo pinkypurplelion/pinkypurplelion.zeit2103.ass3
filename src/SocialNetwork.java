@@ -42,21 +42,20 @@ public class SocialNetwork implements SocialNetworkInterface {
 
                 // splits lines into data segments as an array
                 // needs two splits because of file formatting
-                String[] split = line.split("\t");
-                String[] split2 = split[2].split(",");
+                String[] split = line.split("\t|,");
 
                 // adds node to graph
                 Node node = sn.addNode(
                         Integer.parseInt(split[0]),
                         split[1],
-                        LocalDate.parse(split2[0]),
-                        split2[1].strip());
+                        LocalDate.parse(split[2]),
+                        split[3].strip());
 
                 // creates set of nodes friends from file
                 HashSet<Integer> friends = new HashSet<>();
 
-                for (int i = 2; i < split2.length; i++) {
-                    friends.add(Integer.parseInt(split2[i].strip()));
+                for (int i = 4; i < split.length; i++) {
+                    friends.add(Integer.parseInt(split[i].strip()));
                 }
 
                 // adds to hashset to manage adding friends
@@ -98,12 +97,12 @@ public class SocialNetwork implements SocialNetworkInterface {
         List<Node> suggestedFriends = new ArrayList<>();
 
         //adds all friends of friends to the set
-        for (Edge friend : currentFriends.values()) {
+        for (Edge friend : currentFriends.values()) { // On wrt num friends
             friendsOfFriends.addAll(friend.friend.adj.values());
         }
 
         // iterates over set of friends and adds their friends to the set
-        for (Edge person : friendsOfFriends) {
+        for (Edge person : friendsOfFriends) { // On wrt num friends of friends
             if (Objects.equals(person.friend.getSuburb(), currentPerson.getSuburb()))
                 suggestedFriends.add(person.friend);
         }
