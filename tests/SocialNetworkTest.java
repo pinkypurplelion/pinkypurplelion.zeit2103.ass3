@@ -29,17 +29,8 @@ class SocialNetworkTest {
     }
 
     @Test
-    void remindBDEvents() {
-        System.out.println("node testing off: " + socialNetwork.sn.nodeList.get(1));
-        System.out.println(socialNetwork.remindBDEvents(socialNetwork.sn.nodeList.get(1)));
-
-        fail();
-    }
-
-    @Test
     void getMutualFriends() {
         Graph sn = socialNetwork.sn;
         assertEquals(2, socialNetwork.getMutualFriends(sn.nodeList.get(5001), sn.nodeList.get(9001)).size());
-//        fail();
     }
 }
