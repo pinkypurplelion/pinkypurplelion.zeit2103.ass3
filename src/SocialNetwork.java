@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -115,17 +116,26 @@ public class SocialNetwork implements SocialNetworkInterface {
      * @author Majority Alimah, slight modification by Liam
      */
     public String toString(Node currentPerson, List<Node> friends) {
-    StringBuilder sb = new StringBuilder();
+        LocalDate now = LocalDate.now();
+        StringBuilder sb = new StringBuilder();
 
-    sb.append("Hello ").append(currentPerson.getName()).append(":-> \n");
-    for (Node personsFriend : friends) {
-        int monthDiff = personsFriend.getDateOB().getMonthValue() - currentPerson.getDateOB().getMonthValue();
-        int dayDiff = personsFriend.getDateOB().getDayOfMonth() - currentPerson.getDateOB().getDayOfMonth();
-    //	        sb.append(personsFriend.getName() + " has their birthday in " + personsFriend.getDateOB() +" \n");
-    //        	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) \n");
-        sb.append(personsFriend.getName()).append(" has their birthday in ").append(monthDiff).append(" Month(s),").append(dayDiff).append(" Day(s) after you \n");
-    }
-    return sb.toString();
+        sb.append("Hello ").append(currentPerson.getName()).append(":-> \n");
+
+        for (Node personsFriend : friends) {
+            int year = now.getYear();
+            if (personsFriend.getDateOB().getDayOfYear() < now.getDayOfYear())
+                year += 1;
+
+            LocalDate nextBirthdate = LocalDate.of(year, personsFriend.getDateOB().getMonthValue(), personsFriend.getDateOB().getDayOfMonth());
+            Period timeUntilBday = now.until(nextBirthdate);
+//            System.out.println(timeUntilBday);
+//            int monthDiff = (personsFriend.getDateOB().getMonthValue() - currentPerson.getDateOB().getMonthValue()) % 12;
+//            int dayDiff = personsFriend.getDateOB().getDayOfMonth() - currentPerson.getDateOB().getDayOfMonth();
+//            sb.append(personsFriend.getName()).append(" has their birthday in ").append(personsFriend.getDateOB()).append(" \n");
+        //        	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) \n");
+            sb.append(personsFriend.getName()).append(" has their birthday in ").append(timeUntilBday.getYears()).append(" Year(s),").append(timeUntilBday.getMonths()).append(" Month(s),").append(timeUntilBday.getDays()).append(" Day(s) after you \n");
+        }
+        return sb.toString();
     }
 
     /**
