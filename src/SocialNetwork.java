@@ -142,6 +142,64 @@ public class SocialNetwork implements SocialNetworkInterface {
         return sb.toString();
     }
 
+
+    // um based on person?
+//     public String toString(Node currentPerson, PriorityQueue<Node> friends)
+//     {
+//     	StringBuilder sb = new StringBuilder();
+//         sb.append("Hello " + currentPerson.getName()  + ":-> \n");
+//         for (Node personsFriend : friends) 
+// 	    {
+//         	int monthDiff = personsFriend.getDateOB().getMonthValue() - currentPerson.getDateOB().getMonthValue();
+//         	int dayDiff = personsFriend.getDateOB().getDayOfMonth() - currentPerson.getDateOB().getDayOfMonth();
+// //	        sb.append(personsFriend.getName() + " has their birthday in " + personsFriend.getDateOB() +" \n");
+// //        	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) \n");
+//         	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) after you \n");
+//         }
+//         return sb.toString(); 
+//     }
+//     @Override
+//     public String remindBDEvents(Node currentPerson) {
+        
+//         PriorityQueue<Node> friends = new PriorityQueue<Node>();
+//         ArrayList<Edge> d = new ArrayList<Edge>();
+//         for (Edge n : currentPerson.adj.values()) {
+//             d.add(n);
+//         }
+//         ArrayList<Node> n = new ArrayList<Node>();
+//         for (Edge relo : d)
+//         {
+//         	// filters out all the people who have a birthday before the current Person
+// //        	if (relo.friend.getDateOB().getMonthValue() > currentPerson.getDateOB().getMonthValue())
+//         	if (currentPerson.compareTo(relo.friend) == -1)
+//         	{
+//         		n.add(relo.friend);
+//         	}
+//         }
+        
+//         for (Node f : n)
+//         {
+//         	System.out.println(f);
+//         } 
+        
+//         Collections.sort(n, new NodeComparator());
+//         System.out.println(currentPerson);        
+//         for (Node dof : n)
+//         {
+//         	friends.add(dof);
+//         }
+        
+//         if (!friends.isEmpty())
+//         {
+//             return toString(currentPerson, friends);
+//         } 
+//         else 
+//         {
+//         	throw new RuntimeException(currentPerson.getName() + " has no friends.");
+//         }
+//     }
+
+
     /**
      * get a list of all names of mutual friends of two friends x and y
      *
