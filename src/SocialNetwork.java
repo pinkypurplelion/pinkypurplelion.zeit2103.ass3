@@ -117,13 +117,13 @@ public class SocialNetwork implements SocialNetworkInterface {
     public String toString(Node currentPerson, List<Node> friends) {
     StringBuilder sb = new StringBuilder();
 
-    sb.append("Hello " + currentPerson.getName()  + ":-> \n");
+    sb.append("Hello ").append(currentPerson.getName()).append(":-> \n");
     for (Node personsFriend : friends) {
         int monthDiff = personsFriend.getDateOB().getMonthValue() - currentPerson.getDateOB().getMonthValue();
         int dayDiff = personsFriend.getDateOB().getDayOfMonth() - currentPerson.getDateOB().getDayOfMonth();
     //	        sb.append(personsFriend.getName() + " has their birthday in " + personsFriend.getDateOB() +" \n");
     //        	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) \n");
-        sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) after you \n");
+        sb.append(personsFriend.getName()).append(" has their birthday in ").append(monthDiff).append(" Month(s),").append(dayDiff).append(" Day(s) after you \n");
     }
     return sb.toString();
     }
