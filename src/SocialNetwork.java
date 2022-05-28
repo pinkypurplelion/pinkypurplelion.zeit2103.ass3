@@ -107,97 +107,67 @@ public class SocialNetwork implements SocialNetworkInterface {
     }
 
     /**
+     * Converts a given sorted ArrayList of nodes & a person into
+     * a string of birthday reminders
+     * @param currentPerson The person receiving reminders
+     * @param friends A sorted list in order of days till birthday
+     * @return A string containing birthday reminders
+     * @author Majority Alimah, slight modification by Liam
+     */
+    public String toString(Node currentPerson, List<Node> friends) {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Hello " + currentPerson.getName()  + ":-> \n");
+    for (Node personsFriend : friends) {
+        int monthDiff = personsFriend.getDateOB().getMonthValue() - currentPerson.getDateOB().getMonthValue();
+        int dayDiff = personsFriend.getDateOB().getDayOfMonth() - currentPerson.getDateOB().getDayOfMonth();
+    //	        sb.append(personsFriend.getName() + " has their birthday in " + personsFriend.getDateOB() +" \n");
+    //        	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) \n");
+        sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) after you \n");
+    }
+    return sb.toString();
+    }
+
+    /**
      * it returns all of friends of a given account sorted based on their
      * birthday with a string representing time until their birthday
      *
-     * @param currentPerson
+     * @param currentPerson The person receiving reminders
      * @return a string with friends of a given account sorted based on their
-     * birthday with a string representing time until their birthday
+     * @author Majority Alimah, slight modification by Liam
      */
     @Override
     public String remindBDEvents(Node currentPerson) {
-        PriorityQueue<Node> friends = new PriorityQueue<>(
-                currentPerson.adj.values().size(),
-                new NodeComparator());
-        for (Edge e :
-                currentPerson.adj.values()) {
-            friends.add(e.friend);
+        LocalDate currentDate = LocalDate.now();
+
+        // Converts edge collection into friend collection
+        ArrayList<Node> relations = new ArrayList<>();
+        for (Edge relation : currentPerson.adj.values()) {
+            relations.add(relation.friend);
+        }
+        // Throw error if relations no friends exists
+        if (relations.isEmpty())
+            throw new RuntimeException(currentPerson.getName() + " has no friends.");
+
+        // Sorted into month-date order
+        Collections.sort(relations);
+
+        // Finds the next birthday after the current date
+        int x = 0;
+        for (int i = x; i < relations.size(); i++) {
+            int day = relations.get(i).getDateOB().getDayOfYear();
+            if (day > currentDate.getDayOfYear()) {
+                x = i;
+                break;
+            }
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Hello " + currentPerson.getName() + ": \n");
-        Node friend;
-        while (!friends.isEmpty()) {
-            LocalDate curDate = LocalDate.now();
-            friend = friends.poll();
-            sb.append(friend.getName()
-                    + " has their birthday in "
-                    + "0 years "
-                    + (friend.getDateOB().getMonthValue() - curDate.getMonthValue())
-                    + " months "
-                    + (friend.getDateOB().getDayOfMonth() - curDate.getDayOfMonth())
-                    + " days "
-                    + friend.getDateOB() + " \n");
-        }
-        return sb.toString();
+        // Reorders list to be in terms of days until birthday
+        ArrayList<Node> sortedBirthdays = new ArrayList<>(relations.subList(x, relations.size()));
+        sortedBirthdays.addAll(relations.subList(0, x));
+
+        return toString(currentPerson, sortedBirthdays);
     }
-
-
-    // um based on person?
-//     public String toString(Node currentPerson, PriorityQueue<Node> friends)
-//     {
-//     	StringBuilder sb = new StringBuilder();
-//         sb.append("Hello " + currentPerson.getName()  + ":-> \n");
-//         for (Node personsFriend : friends) 
-// 	    {
-//         	int monthDiff = personsFriend.getDateOB().getMonthValue() - currentPerson.getDateOB().getMonthValue();
-//         	int dayDiff = personsFriend.getDateOB().getDayOfMonth() - currentPerson.getDateOB().getDayOfMonth();
-// //	        sb.append(personsFriend.getName() + " has their birthday in " + personsFriend.getDateOB() +" \n");
-// //        	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) \n");
-//         	sb.append(personsFriend.getName() + " has their birthday in " + monthDiff + " Month(s)," + dayDiff + " Day(s) after you \n");
-//         }
-//         return sb.toString(); 
-//     }
-//     @Override
-//     public String remindBDEvents(Node currentPerson) {
-        
-//         PriorityQueue<Node> friends = new PriorityQueue<Node>();
-//         ArrayList<Edge> d = new ArrayList<Edge>();
-//         for (Edge n : currentPerson.adj.values()) {
-//             d.add(n);
-//         }
-//         ArrayList<Node> n = new ArrayList<Node>();
-//         for (Edge relo : d)
-//         {
-//         	// filters out all the people who have a birthday before the current Person
-// //        	if (relo.friend.getDateOB().getMonthValue() > currentPerson.getDateOB().getMonthValue())
-//         	if (currentPerson.compareTo(relo.friend) == -1)
-//         	{
-//         		n.add(relo.friend);
-//         	}
-//         }
-        
-//         for (Node f : n)
-//         {
-//         	System.out.println(f);
-//         } 
-        
-//         Collections.sort(n, new NodeComparator());
-//         System.out.println(currentPerson);        
-//         for (Node dof : n)
-//         {
-//         	friends.add(dof);
-//         }
-        
-//         if (!friends.isEmpty())
-//         {
-//             return toString(currentPerson, friends);
-//         } 
-//         else 
-//         {
-//         	throw new RuntimeException(currentPerson.getName() + " has no friends.");
-//         }
-//     }
 
 
     /**

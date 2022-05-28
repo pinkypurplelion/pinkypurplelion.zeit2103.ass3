@@ -182,23 +182,23 @@ class Node implements NodeInteface, Comparable<Node> {
 
 class NodeComparator implements Comparator<Node> {
     public int compare(Node a, Node b) {
-        int curDays = LocalDate.now().getDayOfYear();
-        int aDays = a.getDateOB().getDayOfYear() - curDays;
-        int bDays = b.getDateOB().getDayOfYear() - curDays;
-        if (aDays < 0) aDays = (aDays + curDays) + 365;
-        if (bDays < 0) bDays = (bDays + curDays) + 365;
-
-        if (aDays > bDays) return 1;
-        if (aDays < bDays) return -1;
-        return 0;
-
-//        int month = a.getDateOB().getMonthValue();
-//        int day = a.getDateOB().getDayOfMonth();
-////        System.out.println("comparator: a - " + month + " " + day + " b - " + b.getDateOB().getMonthValue() + " " + );
+        // code to compare nodes to current date not each other
+//        int curDays = LocalDate.now().getDayOfYear();
+//        int aDays = a.getDateOB().getDayOfYear() - curDays;
+//        int bDays = b.getDateOB().getDayOfYear() - curDays;
+//        if (aDays < 0) aDays = (aDays + curDays) + 365;
+//        if (bDays < 0) bDays = (bDays + curDays) + 365;
 //
-//        if (month < b.getDateOB().getMonthValue()) return 1;
-//        else if (month > b.getDateOB().getMonthValue()) return -1;
-//        else if (day < b.getDateOB().getDayOfMonth()) return 1;
-//        else if (day > b.getDateOB().getDayOfMonth()) return -1;
+//        if (aDays > bDays) return 1;
+//        if (aDays < bDays) return -1;
+//        return 0;
+        int month = a.getDateOB().getMonthValue();
+        int day = a.getDateOB().getDayOfMonth();
+
+        if (month < b.getDateOB().getMonthValue()) return 1;
+        else if (month > b.getDateOB().getMonthValue()) return -1;
+        else if (day < b.getDateOB().getDayOfMonth()) return 1;
+        else if (day > b.getDateOB().getDayOfMonth()) return -1;
+        return 0;
     }
 }
